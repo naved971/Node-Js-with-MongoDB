@@ -998,7 +998,6 @@ var App = exports.App = function (_React$Component) {
       return _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement(BookList, null),
         _react2.default.createElement(
           "h1",
           null,

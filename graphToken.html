@@ -1,0 +1,61 @@
+<html>
+    <head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://raw.githubusercontent.com/AzureAD/azure-activedirectory-library-for-js/master/lib/adal.js"></script>
+    </head>
+    <body>
+    
+    <button id="login"> login</button>
+    <button id="clickMe">click me</button>
+    <script>
+    
+    
+    $(function () {
+        var endpoints = {
+              "https://graph.microsoft.com": "https://graph.microsoft.com"
+        };
+        window.config = {
+            tenant: 'xxxx.onmicrosoft.com',
+            clientId: 'xxxxxxxxxxxxxxxxx',
+            endpoints: endpoints
+        };
+        window.authContext = new AuthenticationContext(config);
+    
+    
+        $("#login").click(function () {
+            window.authContext.login();
+        });
+    
+        $("#clickMe").click(function () {
+            var user = window.authContext.getCachedUser();
+            console.log(user);
+    
+            window.authContext.acquireToken('https://graph.microsoft.com', function (error, token) {
+                console.log(error);
+                console.log(token);
+    
+                 $.ajax({
+            url: 'https://graph.microsoft.com/v1.0/me/',
+            headers:{'authorization':'Bearer '+ token},
+            type:'GET',
+            dataType:'json'
+          }).done(function(res) {
+            console.log(res['userPrincipalName']);
+          });
+    
+        });
+            }
+                );
+    
+        function init(){
+            if(window.location.hash!="")
+                window.authContext.handleWindowCallback(window.location.hash);
+        }
+    
+        init();
+    });
+    </script>
+    
+    
+    </body>
+    </html>
