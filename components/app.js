@@ -5,7 +5,6 @@ export class App extends React.Component {
   render() {
     return (
       <div>
-        <BookList />
         <h1>Hello </h1>;
       </div>
     );
